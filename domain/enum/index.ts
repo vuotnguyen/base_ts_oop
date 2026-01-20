@@ -1,0 +1,6 @@
+export enum RANK_USER {
+    FRESHER = 'FRESHER',
+    JUNIOR = 'JUNIOR',
+    SEMI_SENIOR = 'SEMI_SENIOR',
+    SENIOR = 'SENIOR',
+}
