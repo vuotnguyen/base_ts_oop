@@ -1,3 +1,6 @@
+import { RANK_CUSTOMER, TYPE_CUSTOMER } from "@/domain/enum";
+import { UserDTO } from "./user";
+
 export type CustomerDTO = {
     id: string;
     detail: string;

@@ -1,3 +1,4 @@
+import { RANK_USER, TYPE_USER } from "@/domain/enum";
 
 // Data tranfer object dùng để chuyển đổi dữ liệu từ server -> client
 export type UserDTO = {

@@ -1,15 +1,9 @@
 import { IUserRepository } from "../interface/IUserRepository";
 
 export class DeleteUserUseCase {
-    private iUserRepository: IUserRepository;
-    constructor(iUserRepository: IUserRepository) {
-        this.iUserRepository = iUserRepository;
-    }
+  constructor(private readonly userRepository: IUserRepository) {}
 
-    async execute(id: string): Promise<void> {
-        // Logic to delete a user
-        const data = await this.iUserRepository.deleteUser(id);
-        console.log('dataa ', data);
-        
-    }
+  async execute(id: string): Promise<void> {
+    await this.userRepository.deleteUser(id);
+  }
 }

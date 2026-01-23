@@ -1,6 +1,6 @@
 import { CreateUserUseCase } from "@/application/useCase/CreateUserUseCase";
 import { DeleteUserUseCase } from "@/application/useCase/DeleteUserUseCase";
-import { EditUserUseCase } from "@/application/useCase/EditCustomerUseCase";
+import { EditUserUseCase } from "@/application/useCase/EditUserUseCase";
 import { UserApiRepository } from "@/infrastructure/api/UserApiRepository";
 
 const userRepository = new UserApiRepository();

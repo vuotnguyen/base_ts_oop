@@ -1,27 +1,40 @@
 
+import { CreateUserDTO, UpdateUserDTO, UserDTO } from "@/application/dto/user";
 import { createUserUseCase, deleteUserUseCase, editUserUseCase } from "@/di/user.container";
-import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-export const useCreateUser = (dataUser: any): UseQueryResult<any, unknown> => {
-    return useQuery({
-        queryKey: ['users'],
-        queryFn: () =>  createUserUseCase.execute(dataUser),
-        enabled: true,
-    });
-    // Custom hook logic can be added here
-}
-export const useEditUser = (id: string, dataUser: any): UseQueryResult<any, unknown> => {
-    return useQuery({
-        queryKey: ['users', id],
-        queryFn: () =>  editUserUseCase.execute(id, dataUser),
-        enabled: true,
-    });
-    // Custom hook logic can be added here
-}
-export const useDeleteUser = (id: string): UseQueryResult<any, unknown> => {
-    return useQuery({
-        queryKey: ['users', id],
-        queryFn: () =>  deleteUserUseCase.execute(id),
-        enabled: true,
-    });
-    // Custom hook logic can be added here
-}
+import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
+
+const userKeys = {
+  all: ["users"] as const,
+  detail: (id: string) => ["users", id] as const,
+};
+
+export const useCreateUser = (): UseMutationResult<UserDTO, unknown, CreateUserDTO> => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input) => createUserUseCase.execute(input),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: userKeys.all });
+    },
+  });
+};
+
+export const useEditUser = (id: string): UseMutationResult<UserDTO, unknown, UpdateUserDTO> => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input) => editUserUseCase.execute(id, input),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: userKeys.detail(id) });
+      qc.invalidateQueries({ queryKey: userKeys.all });
+    },
+  });
+};
+
+export const useDeleteUser = (): UseMutationResult<void, unknown, string> => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userId) => deleteUserUseCase.execute(userId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: userKeys.all });
+    },
+  });
+};

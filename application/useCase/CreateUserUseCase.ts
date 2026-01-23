@@ -1,19 +1,16 @@
-import { IUserRepository } from "../interface/IUserRepository";
 
+import type { IUserRepository } from "@/application/interface/IUserRepository";
+import { CreateUserDTO, UserDTO } from "../dto/user";
+
+/**
+ * Application layer (UseCase)
+ * - Orchestrates business flow
+ * - No axios, no React, no UI
+ */
 export class CreateUserUseCase {
-    private userRepository: IUserRepository;
-    constructor(userRepository: IUserRepository) {
-        this.userRepository = userRepository;
-    }
+  constructor(private readonly userRepository: IUserRepository) {}
 
-    async execute(userData: any): Promise<void> {
-        // Logic to create a user
-        const user = await this.userRepository.createUser(userData);
-        if(user) {
-            console.log("User created successfully");
-        } else {
-            console.log("Failed to create user");
-        }
-    }
-
+  async execute(userData: CreateUserDTO): Promise<UserDTO> {
+    return this.userRepository.createUser(userData);
+  }
 }

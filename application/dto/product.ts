@@ -1,3 +1,7 @@
+import { PRODUCT_STATE, PRODUCT_TYPE } from "@/domain/enum";
+import { OwnerDTO } from "./owner";
+import { UserDTO } from "./user";
+
 export type Location = {
     latitude: number;
     longitude: number;
