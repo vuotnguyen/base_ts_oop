@@ -1,6 +1,7 @@
 
 import { CreateUserDTO, UpdateUserDTO, UserDTO } from "@/application/dto/user";
-import { createUserUseCase, deleteUserUseCase, editUserUseCase } from "@/di/user.container";
+import { userUseCase } from "@/di/user.container";
+
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 
 const userKeys = {
@@ -11,7 +12,7 @@ const userKeys = {
 export const useCreateUser = (): UseMutationResult<UserDTO, unknown, CreateUserDTO> => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (input) => createUserUseCase.execute(input),
+    mutationFn: (input) => userUseCase.executeCreate(input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userKeys.all });
     },
@@ -21,7 +22,7 @@ export const useCreateUser = (): UseMutationResult<UserDTO, unknown, CreateUserD
 export const useEditUser = (id: string): UseMutationResult<UserDTO, unknown, UpdateUserDTO> => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (input) => editUserUseCase.execute(id, input),
+    mutationFn: (input) => userUseCase.executeEdit(id, input),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userKeys.detail(id) });
       qc.invalidateQueries({ queryKey: userKeys.all });
@@ -32,7 +33,7 @@ export const useEditUser = (id: string): UseMutationResult<UserDTO, unknown, Upd
 export const useDeleteUser = (): UseMutationResult<void, unknown, string> => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (userId) => deleteUserUseCase.execute(userId),
+    mutationFn: (userId) => userUseCase.executeDelete(userId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userKeys.all });
     },

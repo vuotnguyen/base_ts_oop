@@ -1,9 +1,12 @@
+import { TYPE_CUSTOMER } from "@/domain/enum";
+import { CustomerDTO } from "../dto/customer";
+
 interface ICustomerRepository {
-    createCustomer(customerData: any): Promise<any>;
+    createCustomer(customerData: CustomerDTO): Promise<any>;
     editCustomer(id: string, customerData: any): Promise<any>;
-    // deleteCustomer(id: string): Promise<void>;
-    // getCustomerById(id: string): Promise<any>;
-    // getAllCustomers(): Promise<any[]>;
+    changeStateCustomer(id: string, state: TYPE_CUSTOMER): Promise<any>
+    getCustomerById(id: string): Promise<any>;
+    getAllCustomers(): Promise<CustomerDTO[]>;
     // Define methods for product repository
 }
 
