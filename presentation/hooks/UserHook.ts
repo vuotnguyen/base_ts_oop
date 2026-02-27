@@ -1,6 +1,6 @@
 
-import { CreateUserDTO, UpdateUserDTO, UserDTO } from "@/application/dto/user";
-import { userUseCase } from "@/di/user.container";
+import { CreateUserDTO, UpdateUserDTO } from "@/application/dto/user";
+import { userUseCase } from "@/application/useCase";
 
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 
@@ -9,7 +9,7 @@ const userKeys = {
   detail: (id: string) => ["users", id] as const,
 };
 
-export const useCreateUser = (): UseMutationResult<UserDTO, unknown, CreateUserDTO> => {
+export const useCreateUser = (): UseMutationResult<void, unknown, CreateUserDTO> => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input) => userUseCase.executeCreate(input),
@@ -19,7 +19,7 @@ export const useCreateUser = (): UseMutationResult<UserDTO, unknown, CreateUserD
   });
 };
 
-export const useEditUser = (id: string): UseMutationResult<UserDTO, unknown, UpdateUserDTO> => {
+export const useEditUser = (id: string): UseMutationResult<void, unknown, UpdateUserDTO> => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input) => userUseCase.executeEdit(id, input),

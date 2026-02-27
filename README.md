@@ -48,3 +48,10 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Miêu tả dự án
+- Dự án được viết theo kiến trúc clean archivetechure 
+   + Presentation: lớp giao tiếp trực tiếp với client qua react query 
+   + Application: lớp quản lý chức năng theo từng module
+   + DI: là nơi khai báo và khởi tạo các useCase
+   + infrastructure: call api từ presentation
